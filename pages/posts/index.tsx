@@ -1,27 +1,36 @@
-import { useRouter } from 'next/dist/client/router';
-import { route } from 'next/dist/server/router';
+import { GetStaticProps, GetStaticPropsContext } from 'next';
+import Link from  'next/link'
 import * as React from 'react';
 
-export interface PostListPageProps {
+export interface  PostListPageProps {
+  posts: any
 }
 
-export default function PostListPage (props: PostListPageProps) {
-  const router = useRouter();
-  function handleSubmit() {
-    router.push({
-      pathname: '/posts/[postId]',
-      query : {
-        postId: '12345',
-        ref: 'social'
-      }
-    })
-  }
+export default function PostListPage ({posts}:  PostListPageProps) {
   return (
     <div>
-      PostListPage
-      <button onClick={handleSubmit}>
-        Go to detail page
-      </button>
+      <h1>Post List Page</h1>
+      {
+        posts.map((item: any) => <li key={item.id}>
+          <Link href={`/posts/${item.id}`}>
+            <a>{item.title}</a>
+          </Link>
+          {/* <p>{item.body}</p> */}
+        </li>)
+      }
     </div>
   );
+}
+
+
+export const getStaticProps: GetStaticProps<PostListPageProps> = async (context: GetStaticPropsContext) => {
+  
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await res.json();
+
+  return {
+    props: {
+      posts : data.map((item: any) => ({id: item.id, title: item.title, body: item.body}))
+    }
+  }
 }
