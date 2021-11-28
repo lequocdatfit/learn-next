@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps<CacheMaxAgeProps> = async (
   const postId = context.query?.postId;
   if (!postId) {
     return {
-      notFound: true,
+      props: {},
     };
   }
 
