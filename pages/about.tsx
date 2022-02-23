@@ -2,6 +2,8 @@ import { useRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 // import Header from '@components/common/Header';
 import dynamic from 'next/dynamic';
+import { MainLayout } from '@components/layout';
+import { NextPageWithLayout } from '@models/common';
 
 export interface AboutPageProps {}
 
@@ -50,6 +52,9 @@ export default function AboutPage(props: AboutPageProps) {
     </div>
   );
 }
+
+AboutPage.Layout = MainLayout;
+
 
 export async function getStaticProps() {
   console.log('GET STATIC PROPS');
