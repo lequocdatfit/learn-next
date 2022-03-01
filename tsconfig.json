@@ -35,6 +35,9 @@
       "@constants/*": [
         "./constants/*"
       ],
+      "@api/*": [
+        "./api-client/*"
+      ],
     }
   },
   "include": [
